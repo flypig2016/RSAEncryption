@@ -5,26 +5,14 @@ from libnum import *
 import sys
 
 
-
-def is_prime(num):
-	for i in xrange(2, num - 1):
-		if num % i == 0:
-			return False
-	else:
-		return True
-
-def generate_prime(bits):
-	while True:
-		value = random.getrandbits(bits)
-		if is_prime(value):
-			return value
-
 class private_key(object):
 	e = 65537
 
 	def __init__(self,bitlength):
 		self.p = generate_prime(bitlength)
+		print self.p
 		self.q = generate_prime(bitlength)
+		print self.q
 		self.phi = (self.p - 1) * (self.q - 1)
 		self.n = self.p * self.q
 		self.d = invmod(self.e, self.phi)
@@ -66,10 +54,10 @@ class RSA(object):
 
 if __name__ == '__main__':
 	#encrypted(int(sys.argv[1]))
-	k = key(10)
+	k = key(1024)
 	k.print_key()
 	r = RSA(k)
-	c = r.encrypt(5)
+	c = r.encrypt(57777)
 	d = r.decrypt(c)
 	r.print_message()
 
