@@ -25,6 +25,14 @@ class public_key(object):
 class key(object):
 	
 	def __init__(self, bitlength):
+		try: 
+			if type(int(bitlength)) == int:
+				bitlength = int(bitlength)
+				#print "i am bitlength {0}".format(bitlength) 
+			
+		except:
+			bitlength = s2n(bitlength)
+			
 		self.private_key = private_key(bitlength)
 		self.public_key = public_key(self.private_key)
 
@@ -54,7 +62,7 @@ class RSA(object):
 
 if __name__ == '__main__':
 	#encrypted(int(sys.argv[1]))
-	k = key(1024)
+	k = key(raw_input("Please enter your encryption key: "))
 	k.print_key()
 	r = RSA(k)
 	c = r.encrypt(57777)
